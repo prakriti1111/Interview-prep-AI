@@ -1,6 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Inputs/Input';
+import { validateEmail } from '../../utils/helper';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPath';
+import { UserContext } from '../../context/userContext';
 
 const Login = ({setCurrentPage}) => {
 
@@ -9,10 +13,47 @@ const Login = ({setCurrentPage}) => {
   const [error,setError] = useState(null);
 
   const navigate = useNavigate();
+  const { updateUser } = useContext(UserContext);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  }
+
+    if(!validateEmail(email)){
+      setError("Please enter a valid email address");
+      return;
+    }
+    if(!password){
+      setError("Please enter your password");     
+      return;
+    } 
+    setError("");
+    
+    //Login API Call
+    
+    try{
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email,
+        password,
+      });
+
+      const { token } = response.data;
+
+      if(token) {
+        localStorage.setItem("token" , token);
+        updateUser(response.data);
+        navigate("/dashboard");
+      }
+    }
+    catch(error){
+      if(error.response && error.response.data.message){
+        setError(error.response.data.message);
+      }
+      else{
+        setError("Something went wrong. Please try again.");
+      }
+    }
+    
+  };
 
   return (
     <>
@@ -38,6 +79,22 @@ const Login = ({setCurrentPage}) => {
             placeholder="Min 8 characters"
             type="password"
           />
+
+          {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+
+          <button  type="submit" className="btn-primary" >
+            LOGIN
+          </button>
+          <p className="text-[13px] text-slate-800 mt-3">
+            Don't have an account?{" "}
+            <button className="font-semibold text-[#9e65db] underline cursor-pointer"
+            onClick={() => {
+              setCurrentPage("signup");
+            }} >
+              SignUp
+            </button>
+          </p>
+
         </form>
       </div>
     </>

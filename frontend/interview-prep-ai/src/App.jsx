@@ -6,18 +6,22 @@ import {Toaster} from 'react-hot-toast';
 import LandingPage from "./pages/Home/LandingPage.jsx";
 import Dashboard from "./pages/Home/Dashboard.jsx";
 import Interviewprep from "./pages/InterviewPrep/InterviewPrep.jsx";
+import UserProvider from './context/userContext.jsx';
 
 
 const App = () => {
   return (
     <>
+
+    <UserProvider>
       <div>
         <Router>
           <Routes>
-            {/* Deafult Page */}
+            {/* Deafult Route */}
             <Route path='/' element={<LandingPage />} />
+
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/interviewprep/:sessionId" element={<Interviewprep />} />
+            <Route path="/interview-prep/:sessionId" element={<Interviewprep />} />
           </Routes>
         </Router>
 
@@ -29,6 +33,7 @@ const App = () => {
         }} 
       />
       </div>
+    </UserProvider>
     </>
   )
 }

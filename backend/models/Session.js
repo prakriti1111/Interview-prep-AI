@@ -12,7 +12,7 @@ const sessionSchema = new mongoose.Schema({
         type: String , 
         required: true
     },
-    topicToFocus: {type: String , required: true},
+    topicsToFocus: {type: String , required: true},
     questions: [{type: mongoose.Schema.Types.ObjectId , ref: "Question"}],
     },
     {
