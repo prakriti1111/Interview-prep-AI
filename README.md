@@ -3,6 +3,17 @@ An advanced full-stack application that helps users generate **personalized inte
 
 ---
 
+## 📸 Screenshots
+
+### 🏠 Landing Page  
+<img src="./frontend/interview-prep-ai/src/assets/landingpage.png" width="800"/>
+
+### 🔐 DashBoard  
+<img src="./frontend/interview-prep-ai/src/assets/session.png" width="800"/>
+
+### 📊 Interview Preparation  
+<img src="./frontend/interview-prep-ai/src/assets/newdash.png" width="800"/>
+
 ## 🚀 Features
 
 ### 🔐 **Authentication & User Management**
